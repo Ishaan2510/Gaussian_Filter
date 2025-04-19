@@ -2,8 +2,8 @@ Getting Started
 1. Clone the Repository
    
 bash
-git clone https://github.com/yourusername/gaussian-blur-from-scratch.git
-cd gaussian-blur-from-scratch
+git clone https://github.com/yourusername/gaussian-blur.git
+cd gaussian-blur
 
 2. Create a Virtual Environment
 
