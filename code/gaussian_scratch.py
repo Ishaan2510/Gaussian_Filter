@@ -2,7 +2,7 @@ import numpy as np
 import time
 import cv2
 
-# cv2 is in 3.12.4 appdata--
+# cv2 is in 3.12.4 appdata-- now installed in global
 
 def create_2d_gaussian_kernel(sigma, size=None):
     """Non-optimized 2D Gaussian kernel creation"""
@@ -85,9 +85,9 @@ if __name__ == "__main__":
     print("=== Performance Comparison ===")
     
     # Non-optimized
-    # start = time.perf_counter()
-    # naive_blur = non_optimized_gaussian_blur(img, sigma=3)
-    # print(f"2D convolution: {time.perf_counter()-start:.2f}s")
+    start = time.perf_counter()
+    naive_blur = non_optimized_gaussian_blur(img, sigma=10)
+    print(f"2D convolution: {time.perf_counter()-start:.2f}s")
 
     # Optimized
     start = time.perf_counter()
@@ -97,18 +97,18 @@ if __name__ == "__main__":
     # OpenCV reference
     start = time.perf_counter()
     # the below is for grayscale conversion
-    # cv_blur = cv2.GaussianBlur(img, (0,0), sigmaX=10)
+    cv_blur = cv2.GaussianBlur(img, (0,0), sigmaX=10)
     # the below is for coloured conversion
-    cv_blur = cv2.GaussianBlur(img_for_cv2, (0,0), sigmaX=10)
+    # cv_blur = cv2.GaussianBlur(img_for_cv2, (0,0), sigmaX=10)
     print(f"OpenCV optimized: {time.perf_counter()-start:.2f}s")
 
     # Validation
     print("\n=== Accuracy Check ===")
-    # print(f"Naive vs OpenCV MSE: {np.mean((naive_blur - cv_blur)**2):.6f}")
-    # print(f"Separable vs OpenCV MSE: {np.mean((sep_blur - cv_blur)**2):.6f}")
+    print(f"Naive vs OpenCV MSE: {np.mean((naive_blur - cv_blur)**2):.6f}")
+    print(f"Separable vs OpenCV MSE: {np.mean((sep_blur - cv_blur)**2):.6f}")
 
     # Save results
-    # cv2.imwrite('naive_blur.jpg', naive_blur*255)
+    cv2.imwrite('naive_blur.jpg', (naive_blur*255).astype(np.uint8))
     # cv2.imwrite('sep_blur.jpg', sep_blur*255)
     cv2.imwrite('sep_blur.jpg', (sep_blur*255).astype(np.uint8))
-    cv2.imwrite('cv2_blur.jpg', cv_blur)
+    # cv2.imwrite('cv2_blur.jpg', cv_blur)
